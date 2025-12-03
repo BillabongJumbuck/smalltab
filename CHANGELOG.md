@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.2.0] - 2025-12-03
+
+### Added
+- **Clock Component**: Added a large, centered digital clock with dynamic greetings (Good Morning/Afternoon/Evening) based on time of day.
+- **Data Backup & Restore**: Added functionality to export all settings and shortcuts to a JSON file and import them back.
+- **Search Focus Effect**: Implemented a cinematic background blur effect when the search bar is focused.
+
+### Changed
+- **Header Layout**: Removed the static "Welcome Back" title in favor of the dynamic clock component.
+- **Settings UI**: Added a dedicated "Data Management" section in the settings modal.
+
 ## [1.1.0] - 2025-12-03
 
 ### Added

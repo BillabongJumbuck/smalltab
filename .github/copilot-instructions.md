@@ -16,12 +16,14 @@
   - `scripts/storage.js`: Wrappers for `chrome.storage.local`.
   - `scripts/i18n.js`: Internationalization helpers (`localizeHtml`, `getMessage`).
   - `scripts/search.js`: Search engine logic (Google, Bing, Baidu).
+  - `scripts/clock.js`: Clock and greeting logic.
   - `scripts/utils.js`: Utility functions (e.g., URL parsing).
 - **CSS (Modular)**:
   - `styles/main.css`: Global layout, typography, background.
   - `styles/grid.css`: Shortcut grid layout.
   - `styles/modal.css`: Settings and Add Shortcut modals.
   - `styles/search.css`: Search bar styling.
+  - `styles/clock.css`: Clock component styling.
 - **Localization**: `_locales/{en,zh_CN}/messages.json`.
 
 ## Data Persistence

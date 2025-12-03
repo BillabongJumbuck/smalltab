@@ -5,7 +5,9 @@ A lightweight, customizable Chrome New Tab extension that replaces your default 
 ## Features
 
 - 🚀 **Quick Access**: Add your favorite websites as shortcuts.
+- ⏰ **Smart Clock**: Large digital clock with dynamic greetings based on the time of day.
 - 🔍 **Multi-Engine Search**: Integrated search bar supporting Google, Bing, and Baidu.
+- 💾 **Data Backup**: Export and import your configuration to keep your data safe.
 - 🎨 **Modern UI/UX**: Glassmorphism design, smooth animations, and crisp SVG icons.
 - 🖼️ **Custom Backgrounds**: Set your wallpaper using a URL or upload a local image.
 - ⚡ **Smart Icons**: Automatically fetches high-quality logos for your shortcuts.
