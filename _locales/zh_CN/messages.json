@@ -1,0 +1,23 @@
+{
+  "appName": { "message": "Small Tab" },
+  "appDesc": { "message": "一个简单且可自定义的新标签页。" },
+  "pageTitle": { "message": "我的快捷访问" },
+  "welcomeMessage": { "message": "欢迎回来" },
+  "settingsLabel": { "message": "设置" },
+  "addShortcut": { "message": "添加" },
+  "addShortcutTitle": { "message": "添加快捷方式" },
+  "nameLabel": { "message": "名称" },
+  "namePlaceholder": { "message": "例如: Google" },
+  "urlLabel": { "message": "网址" },
+  "iconLabel": { "message": "图标地址 (可选)" },
+  "iconPlaceholder": { "message": "图片 URL" },
+  "cancelBtn": { "message": "取消" },
+  "saveBtn": { "message": "保存" },
+  "settingsTitle": { "message": "设置" },
+  "bgUrlLabel": { "message": "背景图片 URL" },
+  "bgUploadLabel": { "message": "或上传本地图片" },
+  "doneBtn": { "message": "完成" },
+  "deleteConfirm": { "message": "确定要删除这个快捷方式吗?" },
+  "inputError": { "message": "请输入名称和网址" },
+  "imageSizeError": { "message": "图片太大，请选择小于 3MB 的图片" }
+}

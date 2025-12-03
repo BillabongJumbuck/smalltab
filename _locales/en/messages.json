@@ -1,0 +1,23 @@
+{
+  "appName": { "message": "Small Tab" },
+  "appDesc": { "message": "A simple and customizable new tab page." },
+  "pageTitle": { "message": "My Quick Access" },
+  "welcomeMessage": { "message": "Welcome Back" },
+  "settingsLabel": { "message": "Settings" },
+  "addShortcut": { "message": "Add" },
+  "addShortcutTitle": { "message": "Add Shortcut" },
+  "nameLabel": { "message": "Name" },
+  "namePlaceholder": { "message": "e.g. Google" },
+  "urlLabel": { "message": "URL" },
+  "iconLabel": { "message": "Icon URL (Optional)" },
+  "iconPlaceholder": { "message": "Image URL" },
+  "cancelBtn": { "message": "Cancel" },
+  "saveBtn": { "message": "Save" },
+  "settingsTitle": { "message": "Settings" },
+  "bgUrlLabel": { "message": "Background Image URL" },
+  "bgUploadLabel": { "message": "Or upload local image" },
+  "doneBtn": { "message": "Done" },
+  "deleteConfirm": { "message": "Are you sure you want to delete this shortcut?" },
+  "inputError": { "message": "Please enter name and URL" },
+  "imageSizeError": { "message": "Image too large, please choose an image smaller than 3MB" }
+}

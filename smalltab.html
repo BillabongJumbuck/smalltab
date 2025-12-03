@@ -2,44 +2,44 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>我的快捷访问</title>
+    <title>Small Tab</title>
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
     <div id="background-layer"></div>
     
     <header>
-        <h1>欢迎回来</h1>
-        <button id="settings-btn" aria-label="设置">⚙️</button>
+        <h1 data-i18n="welcomeMessage">Welcome Back!</h1>
+        <button id="settings-btn" aria-label="Settings" data-i18n-aria="settingsLabel">⚙️</button>
     </header>
 
     <main id="quick-access-grid">
         <!-- Shortcuts will be injected here -->
         <div class="shortcut-item add-button" id="add-shortcut-btn">
             <div class="icon-placeholder">+</div>
-            <div class="shortcut-title">添加</div>
+            <div class="shortcut-title" data-i18n="addShortcut">Add</div>
         </div>
     </main>
 
     <!-- Add Shortcut Modal -->
     <div id="shortcut-modal" class="modal hidden">
         <div class="modal-content">
-            <h2>添加快捷方式</h2>
+            <h2 data-i18n="addShortcutTitle">Add Shortcut</h2>
             <div class="form-group">
-                <label for="shortcut-title">名称</label>
-                <input type="text" id="shortcut-title" placeholder="例如: Google">
+                <label for="shortcut-title" data-i18n="nameLabel">Name</label>
+                <input type="text" id="shortcut-title" placeholder="e.g., Google" data-i18n-placeholder="namePlaceholder">
             </div>
             <div class="form-group">
-                <label for="shortcut-url">网址</label>
+                <label for="shortcut-url" data-i18n="urlLabel">URL</label>
                 <input type="url" id="shortcut-url" placeholder="https://www.google.com">
             </div>
             <div class="form-group">
-                <label for="shortcut-icon">图标地址 (可选)</label>
-                <input type="url" id="shortcut-icon" placeholder="图片 URL">
+                <label for="shortcut-icon" data-i18n="iconLabel">Icon URL (optional)</label>
+                <input type="url" id="shortcut-icon" placeholder="Image URL" data-i18n-placeholder="iconPlaceholder">
             </div>
             <div class="modal-actions">
-                <button id="cancel-shortcut" class="btn-secondary">取消</button>
-                <button id="save-shortcut" class="btn-primary">保存</button>
+                <button id="cancel-shortcut" class="btn-secondary" data-i18n="cancelBtn">Cancel</button>
+                <button id="save-shortcut" class="btn-primary" data-i18n="saveBtn">Save</button>
             </div>
         </div>
     </div>
@@ -47,17 +47,17 @@
     <!-- Settings Modal -->
     <div id="settings-modal" class="modal hidden">
         <div class="modal-content">
-            <h2>设置</h2>
+            <h2 data-i18n="settingsTitle">Settings</h2>
             <div class="form-group">
-                <label for="bg-url">背景图片 URL</label>
+                <label for="bg-url" data-i18n="bgUrlLabel">Background Image URL</label>
                 <input type="url" id="bg-url" placeholder="https://source.unsplash.com/random/1920x1080">
             </div>
             <div class="form-group">
-                <label for="bg-upload">或上传本地图片</label>
+                <label for="bg-upload" data-i18n="bgUploadLabel">Or Upload Local Image</label>
                 <input type="file" id="bg-upload" accept="image/*">
             </div>
             <div class="modal-actions">
-                <button id="close-settings" class="btn-primary">完成</button>
+                <button id="close-settings" class="btn-primary" data-i18n="doneBtn">Done</button>
             </div>
         </div>
     </div>

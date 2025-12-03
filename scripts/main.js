@@ -27,9 +27,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeSettingsBtn = document.getElementById('close-settings');
 
     // --- Initialization ---
+    localizeHtml();
     loadData();
 
     // --- Functions ---
+
+    function localizeHtml() {
+        // Localize text content
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            const message = chrome.i18n.getMessage(key);
+            if (message) {
+                element.textContent = message;
+            }
+        });
+
+        // Localize placeholders
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
+            const key = element.getAttribute('data-i18n-placeholder');
+            const message = chrome.i18n.getMessage(key);
+            if (message) {
+                element.placeholder = message;
+            }
+        });
+        
+        // Localize aria-labels
+        document.querySelectorAll('[data-i18n-aria]').forEach(element => {
+            const key = element.getAttribute('data-i18n-aria');
+            const message = chrome.i18n.getMessage(key);
+            if (message) {
+                element.setAttribute('aria-label', message);
+            }
+        });
+    }
 
     function getDomain(url) {
         try {
@@ -155,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function deleteShortcut(id) {
-        if (confirm('确定要删除这个快捷方式吗?')) {
+        if (confirm(chrome.i18n.getMessage('deleteConfirm'))) {
             shortcuts = shortcuts.filter(s => s.id !== id);
             saveShortcuts();
         }
@@ -167,7 +197,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const iconUrl = iconInput.value.trim();
 
         if (!title || !url) {
-            alert('请输入名称和网址');
+            alert(chrome.i18n.getMessage('inputError'));
             return;
         }
 
@@ -234,7 +264,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Base64 strings can be large.
                 const base64String = event.target.result;
                 if (base64String.length > 4000000) { // ~4MB limit safety
-                    alert('图片太大，请选择小于 3MB 的图片');
+                    alert(chrome.i18n.getMessage('imageSizeError'));
                     return;
                 }
                 settings.backgroundImage = base64String;
