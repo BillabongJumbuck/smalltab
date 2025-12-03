@@ -59,3 +59,7 @@ h1 {
     transform: rotate(90deg);
     color: white;
 }
+
+#settings-btn:active {
+    transform: rotate(90deg) scale(0.9);
+}
