@@ -1,0 +1,25 @@
+#clock-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 5vh;
+    margin-bottom: 40px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    user-select: none;
+}
+
+#time-display {
+    font-size: 6rem;
+    font-weight: 500;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: 2px;
+}
+
+#greeting-display {
+    font-size: 1.5rem;
+    font-weight: 300;
+    margin: 10px 0 0 0;
+    opacity: 0.9;
+}

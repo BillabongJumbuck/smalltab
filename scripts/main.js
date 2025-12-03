@@ -1,7 +1,8 @@
 import { localizeHtml, getMessage } from './i18n.js';
-import { loadFromStorage, saveShortcutsToStorage, saveSettingsToStorage } from './storage.js';
+import { loadFromStorage, saveShortcutsToStorage, saveSettingsToStorage, exportData, importData } from './storage.js';
 import { renderGrid, applyBackground, openModal, closeModal } from './ui.js';
 import { initSearch } from './search.js';
+import { initClock } from './clock.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
@@ -32,8 +33,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgUploadInput = document.getElementById('bg-upload');
     const closeSettingsBtn = document.getElementById('close-settings');
 
+    // Data Management Elements
+    const exportBtn = document.getElementById('export-btn');
+    const importTriggerBtn = document.getElementById('import-trigger-btn');
+    const importFileInput = document.getElementById('import-file');
+
     // --- Initialization ---
     localizeHtml();
+    initClock();
     initData();
 
     // --- Functions ---
@@ -164,6 +171,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 bgUrlInput.value = ''; // Clear URL input if file is used
             };
             reader.readAsDataURL(file);
+        }
+    });
+
+    // Data Management
+    exportBtn.addEventListener('click', exportData);
+    
+    importTriggerBtn.addEventListener('click', () => {
+        importFileInput.click();
+    });
+
+    importFileInput.addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            try {
+                await importData(file);
+                alert(getMessage('importSuccess'));
+                location.reload(); // Reload to apply changes
+            } catch (error) {
+                console.error(error);
+                alert(getMessage('importError'));
+            }
+            // Reset input
+            importFileInput.value = '';
         }
     });
 

@@ -22,5 +22,13 @@
   "imageSizeError": { "message": "Image too large, please choose an image smaller than 3MB" },
   "searchPlaceholder": { "message": "Search..." },
   "searchLabel": { "message": "Search" },
-  "browseBtn": { "message": "Browse..." }
+  "browseBtn": { "message": "Browse..." },
+  "greetingMorning": { "message": "Good Morning" },
+  "greetingAfternoon": { "message": "Good Afternoon" },
+  "greetingEvening": { "message": "Good Evening" },
+  "dataManagementTitle": { "message": "Data Management" },
+  "exportBtn": { "message": "Export Data" },
+  "importBtn": { "message": "Import Data" },
+  "importSuccess": { "message": "Data imported successfully!" },
+  "importError": { "message": "Invalid data file." }
 }

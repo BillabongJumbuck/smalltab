@@ -22,5 +22,13 @@
   "imageSizeError": { "message": "图片太大，请选择小于 3MB 的图片" },
   "searchPlaceholder": { "message": "搜索..." },
   "searchLabel": { "message": "搜索" },
-  "browseBtn": { "message": "浏览..." }
+  "browseBtn": { "message": "浏览..." },
+  "greetingMorning": { "message": "早上好" },
+  "greetingAfternoon": { "message": "下午好" },
+  "greetingEvening": { "message": "晚上好" },
+  "dataManagementTitle": { "message": "数据管理" },
+  "exportBtn": { "message": "导出数据" },
+  "importBtn": { "message": "导入数据" },
+  "importSuccess": { "message": "数据导入成功！" },
+  "importError": { "message": "无效的数据文件。" }
 }
