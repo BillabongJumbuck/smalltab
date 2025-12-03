@@ -1,12 +1,14 @@
 import { localizeHtml, getMessage } from './i18n.js';
 import { loadFromStorage, saveShortcutsToStorage, saveSettingsToStorage } from './storage.js';
 import { renderGrid, applyBackground, openModal, closeModal } from './ui.js';
+import { initSearch } from './search.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // State
     let shortcuts = [];
     let settings = {
-        backgroundImage: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop' // Default nature background
+        backgroundImage: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop', // Default nature background
+        searchEngine: 'google'
     };
 
     // DOM Elements
@@ -58,6 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
             
             render();
             applyBackground(settings, backgroundLayer);
+            initSearch(settings, (newSettings) => {
+                settings = newSettings;
+                saveSettings();
+            });
         } catch (error) {
             console.error('Error loading data:', error);
         }

@@ -19,5 +19,7 @@
   "doneBtn": { "message": "完成" },
   "deleteConfirm": { "message": "确定要删除这个快捷方式吗?" },
   "inputError": { "message": "请输入名称和网址" },
-  "imageSizeError": { "message": "图片太大，请选择小于 3MB 的图片" }
+  "imageSizeError": { "message": "图片太大，请选择小于 3MB 的图片" },
+  "searchPlaceholder": { "message": "搜索..." },
+  "searchLabel": { "message": "搜索" }
 }

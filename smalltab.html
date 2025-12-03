@@ -13,6 +13,18 @@
         <button id="settings-btn" aria-label="Settings" data-i18n-aria="settingsLabel">⚙️</button>
     </header>
 
+    <div id="search-container">
+        <form id="search-form">
+            <select id="search-engine-select" aria-label="Select Search Engine">
+                <option value="google">Google</option>
+                <option value="bing">Bing</option>
+                <option value="baidu">Baidu</option>
+            </select>
+            <input type="text" id="search-input" data-i18n-placeholder="searchPlaceholder" autocomplete="off">
+            <button type="submit" id="search-btn" data-i18n-aria="searchLabel">🔍</button>
+        </form>
+    </div>
+
     <main id="quick-access-grid">
         <!-- Shortcuts will be injected here -->
         <div class="shortcut-item add-button" id="add-shortcut-btn">

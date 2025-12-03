@@ -19,5 +19,7 @@
   "doneBtn": { "message": "Done" },
   "deleteConfirm": { "message": "Are you sure you want to delete this shortcut?" },
   "inputError": { "message": "Please enter name and URL" },
-  "imageSizeError": { "message": "Image too large, please choose an image smaller than 3MB" }
+  "imageSizeError": { "message": "Image too large, please choose an image smaller than 3MB" },
+  "searchPlaceholder": { "message": "Search..." },
+  "searchLabel": { "message": "Search" }
 }
