@@ -5,11 +5,13 @@ A lightweight, customizable Chrome New Tab extension that replaces your default 
 ## Features
 
 - 🚀 **Quick Access**: Add your favorite websites as shortcuts.
+- 🔍 **Multi-Engine Search**: Integrated search bar supporting Google, Bing, and Baidu.
+- 🎨 **Modern UI/UX**: Glassmorphism design, smooth animations, and crisp SVG icons.
 - 🖼️ **Custom Backgrounds**: Set your wallpaper using a URL or upload a local image.
 - ⚡ **Smart Icons**: Automatically fetches high-quality logos for your shortcuts.
 - 🌍 **Internationalization**: Supports English and Simplified Chinese (简体中文).
 - 🔒 **Privacy Focused**: All data is stored locally in your browser (`chrome.storage.local`). No external servers tracking your data.
-- ⚡ **Lightweight**: Built with Vanilla JavaScript (ES Modules), HTML, and CSS. No heavy frameworks.
+- ⚡ **Lightweight**: Built with Vanilla JavaScript (ES Modules), HTML, and CSS. No heavy frameworks or libraries.
 
 ## Installation
 

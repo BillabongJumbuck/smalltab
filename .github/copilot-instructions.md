@@ -33,14 +33,19 @@
 ## Key Features & Patterns
 1.  **Smart Icons**:
     - Try user-provided URL -> Clearbit Logo API -> Google Favicon API (fallback).
-    - Implemented in `scripts/ui.js` using `img.onerror` handlers (programmatically attached to avoid CSP issues).
-2.  **Internationalization (i18n)**:
+    - Implemented in `scripts/ui.js` using `img.onerror` handlers.
+2.  **UI/UX Design**:
+    - **Glassmorphism**: Extensive use of `backdrop-filter: blur()`, semi-transparent backgrounds, and subtle borders.
+    - **SVG Icons**: All icons are inline SVGs (no external font libraries like FontAwesome) for zero-dependency and crisp rendering.
+    - **Animations**: CSS transitions for hover states, modal fade-in/scale-up, and dropdown slide effects.
+    - **Custom Components**: Replaced native `<select>` and `<input type="file">` with custom styled HTML/CSS/JS components for visual consistency.
+3.  **Internationalization (i18n)**:
     - HTML elements use `data-i18n`, `data-i18n-placeholder`, `data-i18n-aria`.
     - `scripts/i18n.js` handles replacement on load.
     - JS strings use `chrome.i18n.getMessage()`.
-3.  **Search**:
-    - Supports multiple engines.
-    - Logic in `scripts/search.js`.
+4.  **Search**:
+    - Supports multiple engines (Google, Bing, Baidu).
+    - Custom dropdown UI implemented in `scripts/search.js`.
     - Google search appends `&ie=UTF-8`.
 
 ## Development Workflow
