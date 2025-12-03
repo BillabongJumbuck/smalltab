@@ -18,6 +18,9 @@
     {
       "resources": [
         "styles/main.css", 
+        "styles/grid.css",
+        "styles/modal.css",
+        "styles/search.css",
         "scripts/main.js",
         "scripts/utils.js",
         "scripts/i18n.js",

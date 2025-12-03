@@ -1,0 +1,84 @@
+#quick-access-grid { 
+    /* 使用 CSS Grid 实现网格布局 */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 响应式网格 */
+    gap: 20px; 
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.shortcut-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.2s;
+    aspect-ratio: 1;
+    text-decoration: none;
+    color: white;
+    position: relative;
+}
+
+.shortcut-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.shortcut-icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 10px;
+    object-fit: contain;
+}
+
+.icon-placeholder {
+    font-size: 48px;
+    line-height: 48px;
+    margin-bottom: 10px;
+    opacity: 0.8;
+}
+
+.shortcut-title {
+    font-size: 0.9rem;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+
+/* Delete button for shortcuts */
+.delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(0,0,0,0.5);
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    display: none; /* Hidden by default, shown on hover */
+    align-items: center;
+    justify-content: center;
+}
+
+.shortcut-item:hover .delete-btn {
+    display: flex;
+}
+
+.delete-btn:hover {
+    background: red;
+}
