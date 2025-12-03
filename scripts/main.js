@@ -31,6 +31,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Functions ---
 
+    function getDomain(url) {
+        try {
+            return new URL(url).hostname;
+        } catch (e) {
+            return url;
+        }
+    }
+
     async function loadData() {
         try {
             const result = await chrome.storage.local.get(['shortcuts', 'settings']);
@@ -39,10 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 shortcuts = result.shortcuts;
             } else {
                 // Default shortcuts if none exist
+                // Removed hardcoded .ico to use the new auto-fetch logic
                 shortcuts = [
-                    { id: '1', title: 'Google', url: 'https://www.google.com', iconUrl: 'https://www.google.com/favicon.ico' },
-                    { id: '2', title: 'YouTube', url: 'https://www.youtube.com', iconUrl: 'https://www.youtube.com/favicon.ico' },
-                    { id: '3', title: 'GitHub', url: 'https://github.com', iconUrl: 'https://github.com/favicon.ico' }
+                    { id: '1', title: 'Google', url: 'https://www.google.com', iconUrl: '' },
+                    { id: '2', title: 'YouTube', url: 'https://www.youtube.com', iconUrl: '' },
+                    { id: '3', title: 'GitHub', url: 'https://github.com', iconUrl: '' }
                 ];
                 saveShortcuts();
             }
@@ -93,23 +102,49 @@ document.addEventListener('DOMContentLoaded', () => {
         div.className = 'shortcut-item';
         div.href = shortcut.url;
         
-        // Handle favicon/icon
-        let iconImg;
+        const domain = getDomain(shortcut.url);
+        // Strategy:
+        // 1. User provided iconUrl (if exists)
+        // 2. Clearbit Logo API (High quality logos)
+        // 3. Google Favicon API with large size (sz=128) as fallback
+        
+        const googleFavicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+        const clearbitLogo = `https://logo.clearbit.com/${domain}`;
+
+        // Create Image Element Programmatically to avoid CSP inline handler issues
+        const img = document.createElement('img');
+        img.className = 'shortcut-icon';
+        img.alt = shortcut.title;
+
         if (shortcut.iconUrl) {
-            iconImg = `<img src="${shortcut.iconUrl}" class="shortcut-icon" alt="${shortcut.title}" onerror="this.src='https://www.google.com/s2/favicons?domain=${shortcut.url}&sz=64'">`;
+            img.src = shortcut.iconUrl;
+            // Fallback to Google if user provided URL fails
+            img.addEventListener('error', () => {
+                img.src = googleFavicon;
+            }, { once: true });
         } else {
-            // Fallback to Google's favicon service
-            iconImg = `<img src="https://www.google.com/s2/favicons?domain=${shortcut.url}&sz=64" class="shortcut-icon" alt="${shortcut.title}">`;
+            // Try Clearbit first, fallback to Google
+            img.src = clearbitLogo;
+            img.addEventListener('error', () => {
+                img.src = googleFavicon;
+            }, { once: true });
         }
 
-        div.innerHTML = `
-            ${iconImg}
-            <div class="shortcut-title">${shortcut.title}</div>
-            <button class="delete-btn" data-id="${shortcut.id}">×</button>
-        `;
+        // Construct the card
+        div.appendChild(img);
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'shortcut-title';
+        titleDiv.textContent = shortcut.title;
+        div.appendChild(titleDiv);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'delete-btn';
+        deleteBtn.dataset.id = shortcut.id;
+        deleteBtn.textContent = '×';
+        div.appendChild(deleteBtn);
 
         // Handle delete click
-        const deleteBtn = div.querySelector('.delete-btn');
         deleteBtn.addEventListener('click', (e) => {
             e.preventDefault(); // Prevent navigation
             e.stopPropagation();
