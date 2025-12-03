@@ -1,5 +1,7 @@
 # Small Tab
 
+[简体中文](README.zh-CN.md) | English
+
 A lightweight, customizable Chrome New Tab extension that replaces your default new tab page with a clean, personalized dashboard.
 
 <p align="center">
