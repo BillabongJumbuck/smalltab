@@ -1,0 +1,218 @@
+document.addEventListener('DOMContentLoaded', () => {
+    // State
+    let shortcuts = [];
+    let settings = {
+        backgroundImage: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop' // Default nature background
+    };
+
+    // DOM Elements
+    const grid = document.getElementById('quick-access-grid');
+    const addBtn = document.getElementById('add-shortcut-btn');
+    const backgroundLayer = document.getElementById('background-layer');
+    
+    // Modal Elements
+    const shortcutModal = document.getElementById('shortcut-modal');
+    const settingsModal = document.getElementById('settings-modal');
+    const settingsBtn = document.getElementById('settings-btn');
+    
+    // Form Elements
+    const saveShortcutBtn = document.getElementById('save-shortcut');
+    const cancelShortcutBtn = document.getElementById('cancel-shortcut');
+    const titleInput = document.getElementById('shortcut-title');
+    const urlInput = document.getElementById('shortcut-url');
+    const iconInput = document.getElementById('shortcut-icon');
+    
+    const bgUrlInput = document.getElementById('bg-url');
+    const bgUploadInput = document.getElementById('bg-upload');
+    const closeSettingsBtn = document.getElementById('close-settings');
+
+    // --- Initialization ---
+    loadData();
+
+    // --- Functions ---
+
+    async function loadData() {
+        try {
+            const result = await chrome.storage.local.get(['shortcuts', 'settings']);
+            
+            if (result.shortcuts) {
+                shortcuts = result.shortcuts;
+            } else {
+                // Default shortcuts if none exist
+                shortcuts = [
+                    { id: '1', title: 'Google', url: 'https://www.google.com', iconUrl: 'https://www.google.com/favicon.ico' },
+                    { id: '2', title: 'YouTube', url: 'https://www.youtube.com', iconUrl: 'https://www.youtube.com/favicon.ico' },
+                    { id: '3', title: 'GitHub', url: 'https://github.com', iconUrl: 'https://github.com/favicon.ico' }
+                ];
+                saveShortcuts();
+            }
+
+            if (result.settings) {
+                settings = { ...settings, ...result.settings };
+            }
+            
+            renderGrid();
+            applySettings();
+        } catch (error) {
+            console.error('Error loading data:', error);
+        }
+    }
+
+    function saveShortcuts() {
+        chrome.storage.local.set({ shortcuts }, () => {
+            renderGrid();
+        });
+    }
+
+    function saveSettings() {
+        chrome.storage.local.set({ settings }, () => {
+            applySettings();
+        });
+    }
+
+    function applySettings() {
+        if (settings.backgroundImage) {
+            backgroundLayer.style.backgroundImage = `url('${settings.backgroundImage}')`;
+        }
+    }
+
+    function renderGrid() {
+        // Clear existing shortcuts (except the add button)
+        const items = grid.querySelectorAll('.shortcut-item:not(.add-button)');
+        items.forEach(item => item.remove());
+
+        // Insert shortcuts before the add button
+        shortcuts.forEach(shortcut => {
+            const el = createShortcutElement(shortcut);
+            grid.insertBefore(el, addBtn);
+        });
+    }
+
+    function createShortcutElement(shortcut) {
+        const div = document.createElement('a');
+        div.className = 'shortcut-item';
+        div.href = shortcut.url;
+        
+        // Handle favicon/icon
+        let iconImg;
+        if (shortcut.iconUrl) {
+            iconImg = `<img src="${shortcut.iconUrl}" class="shortcut-icon" alt="${shortcut.title}" onerror="this.src='https://www.google.com/s2/favicons?domain=${shortcut.url}&sz=64'">`;
+        } else {
+            // Fallback to Google's favicon service
+            iconImg = `<img src="https://www.google.com/s2/favicons?domain=${shortcut.url}&sz=64" class="shortcut-icon" alt="${shortcut.title}">`;
+        }
+
+        div.innerHTML = `
+            ${iconImg}
+            <div class="shortcut-title">${shortcut.title}</div>
+            <button class="delete-btn" data-id="${shortcut.id}">×</button>
+        `;
+
+        // Handle delete click
+        const deleteBtn = div.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent navigation
+            e.stopPropagation();
+            deleteShortcut(shortcut.id);
+        });
+
+        return div;
+    }
+
+    function deleteShortcut(id) {
+        if (confirm('确定要删除这个快捷方式吗?')) {
+            shortcuts = shortcuts.filter(s => s.id !== id);
+            saveShortcuts();
+        }
+    }
+
+    function addShortcut() {
+        const title = titleInput.value.trim();
+        let url = urlInput.value.trim();
+        const iconUrl = iconInput.value.trim();
+
+        if (!title || !url) {
+            alert('请输入名称和网址');
+            return;
+        }
+
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
+        }
+
+        const newShortcut = {
+            id: Date.now().toString(),
+            title,
+            url,
+            iconUrl
+        };
+
+        shortcuts.push(newShortcut);
+        saveShortcuts();
+        closeModal(shortcutModal);
+        
+        // Reset form
+        titleInput.value = '';
+        urlInput.value = '';
+        iconInput.value = '';
+    }
+
+    // --- Event Listeners ---
+
+    // Modals
+    function openModal(modal) {
+        modal.classList.remove('hidden');
+    }
+
+    function closeModal(modal) {
+        modal.classList.add('hidden');
+    }
+
+    addBtn.addEventListener('click', () => openModal(shortcutModal));
+    cancelShortcutBtn.addEventListener('click', () => closeModal(shortcutModal));
+    
+    settingsBtn.addEventListener('click', () => {
+        bgUrlInput.value = settings.backgroundImage || '';
+        openModal(settingsModal);
+    });
+    
+    closeSettingsBtn.addEventListener('click', () => closeModal(settingsModal));
+
+    // Save Shortcut
+    saveShortcutBtn.addEventListener('click', addShortcut);
+
+    // Background Settings
+    bgUrlInput.addEventListener('change', () => {
+        const url = bgUrlInput.value.trim();
+        if (url) {
+            settings.backgroundImage = url;
+            saveSettings();
+        }
+    });
+
+    bgUploadInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                // Check size - chrome.storage.local has a quota (5MB usually, but can be unlimited in manifest v3 with 'unlimitedStorage' permission if needed, but standard is 5MB)
+                // Base64 strings can be large.
+                const base64String = event.target.result;
+                if (base64String.length > 4000000) { // ~4MB limit safety
+                    alert('图片太大，请选择小于 3MB 的图片');
+                    return;
+                }
+                settings.backgroundImage = base64String;
+                saveSettings();
+                bgUrlInput.value = ''; // Clear URL input if file is used
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Close modals on outside click
+    window.addEventListener('click', (e) => {
+        if (e.target === shortcutModal) closeModal(shortcutModal);
+        if (e.target === settingsModal) closeModal(settingsModal);
+    });
+});

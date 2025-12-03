@@ -6,17 +6,62 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
+    <div id="background-layer"></div>
+    
     <header>
         <h1>欢迎回来</h1>
+        <button id="settings-btn" aria-label="设置">⚙️</button>
     </header>
 
     <main id="quick-access-grid">
-        <div class="shortcut-item add-button" id="add-shortcut">
+        <!-- Shortcuts will be injected here -->
+        <div class="shortcut-item add-button" id="add-shortcut-btn">
             <div class="icon-placeholder">+</div>
-            <div class="shortcut-title">添加链接</div>
+            <div class="shortcut-title">添加</div>
         </div>
     </main>
 
-    <script src="scripts/newtab.js"></script>
+    <!-- Add Shortcut Modal -->
+    <div id="shortcut-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>添加快捷方式</h2>
+            <div class="form-group">
+                <label for="shortcut-title">名称</label>
+                <input type="text" id="shortcut-title" placeholder="例如: Google">
+            </div>
+            <div class="form-group">
+                <label for="shortcut-url">网址</label>
+                <input type="url" id="shortcut-url" placeholder="https://www.google.com">
+            </div>
+            <div class="form-group">
+                <label for="shortcut-icon">图标地址 (可选)</label>
+                <input type="url" id="shortcut-icon" placeholder="图片 URL">
+            </div>
+            <div class="modal-actions">
+                <button id="cancel-shortcut" class="btn-secondary">取消</button>
+                <button id="save-shortcut" class="btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content">
+            <h2>设置</h2>
+            <div class="form-group">
+                <label for="bg-url">背景图片 URL</label>
+                <input type="url" id="bg-url" placeholder="https://source.unsplash.com/random/1920x1080">
+            </div>
+            <div class="form-group">
+                <label for="bg-upload">或上传本地图片</label>
+                <input type="file" id="bg-upload" accept="image/*">
+            </div>
+            <div class="modal-actions">
+                <button id="close-settings" class="btn-primary">完成</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
 </body>
 </html>
