@@ -70,6 +70,15 @@ export function initSearch(settings, saveSettingsCallback) {
             window.location.href = searchUrl;
         }
     });
+
+    // Focus Effects
+    searchInput.addEventListener('focus', () => {
+        document.body.classList.add('search-focus');
+    });
+
+    searchInput.addEventListener('blur', () => {
+        document.body.classList.remove('search-focus');
+    });
 }
 
 function getSearchUrl(engine, query) {
