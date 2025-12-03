@@ -21,5 +21,6 @@
   "inputError": { "message": "Please enter name and URL" },
   "imageSizeError": { "message": "Image too large, please choose an image smaller than 3MB" },
   "searchPlaceholder": { "message": "Search..." },
-  "searchLabel": { "message": "Search" }
+  "searchLabel": { "message": "Search" },
+  "browseBtn": { "message": "Browse..." }
 }

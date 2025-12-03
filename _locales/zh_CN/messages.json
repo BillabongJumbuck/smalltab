@@ -21,5 +21,6 @@
   "inputError": { "message": "请输入名称和网址" },
   "imageSizeError": { "message": "图片太大，请选择小于 3MB 的图片" },
   "searchPlaceholder": { "message": "搜索..." },
-  "searchLabel": { "message": "搜索" }
+  "searchLabel": { "message": "搜索" },
+  "browseBtn": { "message": "浏览..." }
 }
