@@ -5,13 +5,13 @@
 一个轻量、可自定义的 Chrome 新标签页扩展，用简洁、个性化的面板替代默认的新标签页。
 
 <p align="center">
-  <img src="https://qjm-typora.oss-cn-wuhan-lr.aliyuncs.com/20251203174322912.png" alt="主界面" width="100%">
+  <img src="./screenshots/main.png" alt="主界面" width="100%">
   <br>
   <em>简洁的毛玻璃风格界面</em>
 </p>
 
 <p align="center">
-  <img src="https://qjm-typora.oss-cn-wuhan-lr.aliyuncs.com/image-20251203174411572.png" alt="搜索聚焦模式" width="100%">
+  <img src="./screenshots/blur.png" alt="搜索聚焦模式" width="100%">
   <br>
   <em>沉浸式搜索聚焦模式</em>
 </p>
