@@ -16,7 +16,14 @@
   
   "web_accessible_resources": [
     {
-      "resources": ["styles/main.css", "scripts/main.js"],
+      "resources": [
+        "styles/main.css", 
+        "scripts/main.js",
+        "scripts/utils.js",
+        "scripts/i18n.js",
+        "scripts/storage.js",
+        "scripts/ui.js"
+      ],
       "matches": ["<all_urls>"]
     }
   ]

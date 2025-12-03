@@ -1,3 +1,7 @@
+import { localizeHtml, getMessage } from './i18n.js';
+import { loadFromStorage, saveShortcutsToStorage, saveSettingsToStorage } from './storage.js';
+import { renderGrid, applyBackground, openModal, closeModal } from './ui.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     // State
     let shortcuts = [];
@@ -28,56 +32,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Initialization ---
     localizeHtml();
-    loadData();
+    initData();
 
     // --- Functions ---
 
-    function localizeHtml() {
-        // Localize text content
-        document.querySelectorAll('[data-i18n]').forEach(element => {
-            const key = element.getAttribute('data-i18n');
-            const message = chrome.i18n.getMessage(key);
-            if (message) {
-                element.textContent = message;
-            }
-        });
-
-        // Localize placeholders
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(element => {
-            const key = element.getAttribute('data-i18n-placeholder');
-            const message = chrome.i18n.getMessage(key);
-            if (message) {
-                element.placeholder = message;
-            }
-        });
-        
-        // Localize aria-labels
-        document.querySelectorAll('[data-i18n-aria]').forEach(element => {
-            const key = element.getAttribute('data-i18n-aria');
-            const message = chrome.i18n.getMessage(key);
-            if (message) {
-                element.setAttribute('aria-label', message);
-            }
-        });
-    }
-
-    function getDomain(url) {
+    async function initData() {
         try {
-            return new URL(url).hostname;
-        } catch (e) {
-            return url;
-        }
-    }
-
-    async function loadData() {
-        try {
-            const result = await chrome.storage.local.get(['shortcuts', 'settings']);
+            const result = await loadFromStorage();
             
             if (result.shortcuts) {
                 shortcuts = result.shortcuts;
             } else {
                 // Default shortcuts if none exist
-                // Removed hardcoded .ico to use the new auto-fetch logic
                 shortcuts = [
                     { id: '1', title: 'Google', url: 'https://www.google.com', iconUrl: '' },
                     { id: '2', title: 'YouTube', url: 'https://www.youtube.com', iconUrl: '' },
@@ -90,102 +56,31 @@ document.addEventListener('DOMContentLoaded', () => {
                 settings = { ...settings, ...result.settings };
             }
             
-            renderGrid();
-            applySettings();
+            render();
+            applyBackground(settings, backgroundLayer);
         } catch (error) {
             console.error('Error loading data:', error);
         }
     }
 
     function saveShortcuts() {
-        chrome.storage.local.set({ shortcuts }, () => {
-            renderGrid();
+        saveShortcutsToStorage(shortcuts, () => {
+            render();
         });
     }
 
     function saveSettings() {
-        chrome.storage.local.set({ settings }, () => {
-            applySettings();
+        saveSettingsToStorage(settings, () => {
+            applyBackground(settings, backgroundLayer);
         });
     }
 
-    function applySettings() {
-        if (settings.backgroundImage) {
-            backgroundLayer.style.backgroundImage = `url('${settings.backgroundImage}')`;
-        }
-    }
-
-    function renderGrid() {
-        // Clear existing shortcuts (except the add button)
-        const items = grid.querySelectorAll('.shortcut-item:not(.add-button)');
-        items.forEach(item => item.remove());
-
-        // Insert shortcuts before the add button
-        shortcuts.forEach(shortcut => {
-            const el = createShortcutElement(shortcut);
-            grid.insertBefore(el, addBtn);
-        });
-    }
-
-    function createShortcutElement(shortcut) {
-        const div = document.createElement('a');
-        div.className = 'shortcut-item';
-        div.href = shortcut.url;
-        
-        const domain = getDomain(shortcut.url);
-        // Strategy:
-        // 1. User provided iconUrl (if exists)
-        // 2. Clearbit Logo API (High quality logos)
-        // 3. Google Favicon API with large size (sz=128) as fallback
-        
-        const googleFavicon = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-        const clearbitLogo = `https://logo.clearbit.com/${domain}`;
-
-        // Create Image Element Programmatically to avoid CSP inline handler issues
-        const img = document.createElement('img');
-        img.className = 'shortcut-icon';
-        img.alt = shortcut.title;
-
-        if (shortcut.iconUrl) {
-            img.src = shortcut.iconUrl;
-            // Fallback to Google if user provided URL fails
-            img.addEventListener('error', () => {
-                img.src = googleFavicon;
-            }, { once: true });
-        } else {
-            // Try Clearbit first, fallback to Google
-            img.src = clearbitLogo;
-            img.addEventListener('error', () => {
-                img.src = googleFavicon;
-            }, { once: true });
-        }
-
-        // Construct the card
-        div.appendChild(img);
-
-        const titleDiv = document.createElement('div');
-        titleDiv.className = 'shortcut-title';
-        titleDiv.textContent = shortcut.title;
-        div.appendChild(titleDiv);
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.dataset.id = shortcut.id;
-        deleteBtn.textContent = '×';
-        div.appendChild(deleteBtn);
-
-        // Handle delete click
-        deleteBtn.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent navigation
-            e.stopPropagation();
-            deleteShortcut(shortcut.id);
-        });
-
-        return div;
+    function render() {
+        renderGrid(shortcuts, grid, addBtn, deleteShortcut);
     }
 
     function deleteShortcut(id) {
-        if (confirm(chrome.i18n.getMessage('deleteConfirm'))) {
+        if (confirm(getMessage('deleteConfirm'))) {
             shortcuts = shortcuts.filter(s => s.id !== id);
             saveShortcuts();
         }
@@ -197,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const iconUrl = iconInput.value.trim();
 
         if (!title || !url) {
-            alert(chrome.i18n.getMessage('inputError'));
+            alert(getMessage('inputError'));
             return;
         }
 
@@ -223,15 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- Event Listeners ---
-
-    // Modals
-    function openModal(modal) {
-        modal.classList.remove('hidden');
-    }
-
-    function closeModal(modal) {
-        modal.classList.add('hidden');
-    }
 
     addBtn.addEventListener('click', () => openModal(shortcutModal));
     cancelShortcutBtn.addEventListener('click', () => closeModal(shortcutModal));
@@ -264,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Base64 strings can be large.
                 const base64String = event.target.result;
                 if (base64String.length > 4000000) { // ~4MB limit safety
-                    alert(chrome.i18n.getMessage('imageSizeError'));
+                    alert(getMessage('imageSizeError'));
                     return;
                 }
                 settings.backgroundImage = base64String;
