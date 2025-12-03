@@ -5,13 +5,13 @@
 A lightweight, customizable Chrome New Tab extension that replaces your default new tab page with a clean, personalized dashboard.
 
 <p align="center">
-  <img src="https://qjm-typora.oss-cn-wuhan-lr.aliyuncs.com/20251203174322912.png" alt="Main Interface" width="100%">
+  <img src="./screenshots/main.png" alt="Main Interface" width="100%">
   <br>
   <em>Clean Glassmorphism Interface</em>
 </p>
 
 <p align="center">
-  <img src="https://qjm-typora.oss-cn-wuhan-lr.aliyuncs.com/image-20251203174411572.png" alt="Search Focus Mode" width="100%">
+  <img src="./screenshots/blur.png" alt="Search Focus Mode" width="100%">
   <br>
   <em>Immersive Search Focus Mode</em>
 </p>
