@@ -1,0 +1,8 @@
+
+#quick-access-grid { 
+    /* 使用 CSS Grid 实现网格布局 */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 响应式网格 */
+    gap: 20px; 
+    padding: 50px;
+}
