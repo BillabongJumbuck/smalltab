@@ -128,3 +128,71 @@
 .edit-btn:hover {
     background: #4444ff;
 }
+
+/* Responsive Design */
+@media (max-width: 1440px) {
+    #quick-access-grid {
+        padding: 30px;
+        gap: 15px;
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .shortcut-item {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .shortcut-icon {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .shortcut-title {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #quick-access-grid {
+        padding: 20px;
+        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    }
+
+    .shortcut-item {
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .shortcut-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .shortcut-title {
+        font-size: 0.8rem;
+    }
+}
+
+/* Large Screens (High Res Laptops / Monitors) */
+@media (min-width: 1600px) {
+    #quick-access-grid {
+        max-width: 1600px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 30px;
+    }
+
+    .shortcut-item {
+        padding: 30px;
+        border-radius: 20px;
+    }
+
+    .shortcut-icon {
+        width: 64px;
+        height: 64px;
+    }
+
+    .shortcut-title {
+        font-size: 1.1rem;
+    }
+}

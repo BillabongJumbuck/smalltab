@@ -23,3 +23,19 @@
     margin: 10px 0 0 0;
     opacity: 0.9;
 }
+
+/* Responsive Clock */
+@media (max-width: 1440px) {
+    #time-display { font-size: 5rem; }
+    #greeting-display { font-size: 1.3rem; }
+}
+
+@media (max-width: 768px) {
+    #time-display { font-size: 3.5rem; }
+    #greeting-display { font-size: 1.1rem; }
+}
+
+@media (min-width: 1600px) {
+    #time-display { font-size: 8rem; }
+    #greeting-display { font-size: 2rem; }
+}
