@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3.0] - 2025-12-04
+
+### Added
+- **Drag & Drop Sorting**: Users can now reorder shortcuts by dragging and dropping them.
+- **Edit Shortcuts**: Added the ability to edit existing shortcuts (Title, URL, Icon).
+- **Visual Feedback**: Added visual cues for dragging (opacity change, dashed border) and drop targets.
+
+### Changed
+- **UI Improvements**: Moved the edit button to be below the delete button for better accessibility and visual balance.
+- **Grid Interaction**: Improved hover states for shortcut cards to accommodate new action buttons.
+
 ## [1.2.0] - 2025-12-03
 
 ### Added

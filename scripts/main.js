@@ -7,6 +7,7 @@ import { initClock } from './clock.js';
 document.addEventListener('DOMContentLoaded', () => {
     // State
     let shortcuts = [];
+    let editingId = null;
     let settings = {
         backgroundImage: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop', // Default nature background
         searchEngine: 'google'
@@ -89,7 +90,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function render() {
-        renderGrid(shortcuts, grid, addBtn, deleteShortcut);
+        renderGrid(shortcuts, grid, addBtn, deleteShortcut, handleReorder, editShortcut);
+    }
+
+    function handleReorder(newIds) {
+        const newShortcuts = newIds.map(id => shortcuts.find(s => s.id === id)).filter(Boolean);
+        shortcuts = newShortcuts;
+        // Save silently or with render? 
+        // Since DOM is already updated by drag events, we just need to persist.
+        // But saveShortcuts() calls render(), which is fine to ensure consistency.
+        saveShortcuts();
     }
 
     function deleteShortcut(id) {
@@ -99,7 +109,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function addShortcut() {
+    function editShortcut(shortcut) {
+        editingId = shortcut.id;
+        titleInput.value = shortcut.title;
+        urlInput.value = shortcut.url;
+        iconInput.value = shortcut.iconUrl || '';
+        openModal(shortcutModal);
+    }
+
+    function handleSaveShortcut() {
         const title = titleInput.value.trim();
         let url = urlInput.value.trim();
         const iconUrl = iconInput.value.trim();
@@ -113,18 +131,35 @@ document.addEventListener('DOMContentLoaded', () => {
             url = 'https://' + url;
         }
 
-        const newShortcut = {
-            id: Date.now().toString(),
-            title,
-            url,
-            iconUrl
-        };
+        if (editingId) {
+            // Update existing
+            const index = shortcuts.findIndex(s => s.id === editingId);
+            if (index !== -1) {
+                shortcuts[index] = {
+                    ...shortcuts[index],
+                    title,
+                    url,
+                    iconUrl
+                };
+            }
+        } else {
+            // Add new
+            const newShortcut = {
+                id: Date.now().toString(),
+                title,
+                url,
+                iconUrl
+            };
+            shortcuts.push(newShortcut);
+        }
 
-        shortcuts.push(newShortcut);
         saveShortcuts();
         closeModal(shortcutModal);
-        
-        // Reset form
+        resetShortcutForm();
+    }
+
+    function resetShortcutForm() {
+        editingId = null;
         titleInput.value = '';
         urlInput.value = '';
         iconInput.value = '';
@@ -132,8 +167,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- Event Listeners ---
 
-    addBtn.addEventListener('click', () => openModal(shortcutModal));
-    cancelShortcutBtn.addEventListener('click', () => closeModal(shortcutModal));
+    addBtn.addEventListener('click', () => {
+        resetShortcutForm();
+        openModal(shortcutModal);
+    });
+    
+    cancelShortcutBtn.addEventListener('click', () => {
+        closeModal(shortcutModal);
+        resetShortcutForm();
+    });
     
     settingsBtn.addEventListener('click', () => {
         bgUrlInput.value = settings.backgroundImage || '';
@@ -143,7 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
     closeSettingsBtn.addEventListener('click', () => closeModal(settingsModal));
 
     // Save Shortcut
-    saveShortcutBtn.addEventListener('click', addShortcut);
+    saveShortcutBtn.addEventListener('click', handleSaveShortcut);
 
     // Background Settings
     bgUrlInput.addEventListener('change', () => {
