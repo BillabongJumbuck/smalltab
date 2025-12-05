@@ -130,7 +130,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1440px) {
+@media (max-width: 1560px) {
     #quick-access-grid {
         padding: 30px;
         gap: 15px;
@@ -174,8 +174,8 @@
     }
 }
 
-/* Large Screens (High Res Laptops / Monitors) */
-@media (min-width: 1600px) {
+/* Large Screens (2K / 4K Monitors) */
+@media (min-width: 2000px) {
     #quick-access-grid {
         max-width: 1600px;
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
