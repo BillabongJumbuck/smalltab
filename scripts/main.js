@@ -1,6 +1,6 @@
 import { localizeHtml, getMessage } from './i18n.js';
 import { loadFromStorage, saveShortcutsToStorage, saveSettingsToStorage, exportData, importData } from './storage.js';
-import { renderGrid, applyBackground, openModal, closeModal } from './ui.js';
+import { renderGrid, applyBackground, applyScale, openModal, closeModal } from './ui.js';
 import { initSearch } from './search.js';
 import { initClock } from './clock.js';
 
@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     let editingId = null;
     let settings = {
         backgroundImage: 'https://images.unsplash.com/photo-1472214103451-9374bd1c798e?q=80&w=2070&auto=format&fit=crop', // Default nature background
-        searchEngine: 'google'
+        searchEngine: 'google',
+        clockScale: 1.0,
+        cardScale: 1.0
     };
 
     // DOM Elements
@@ -33,6 +35,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const bgUrlInput = document.getElementById('bg-url');
     const bgUploadInput = document.getElementById('bg-upload');
     const closeSettingsBtn = document.getElementById('close-settings');
+
+    // Appearance Elements
+    const clockSizeSlider = document.getElementById('clock-size-slider');
+    const clockSizeValue = document.getElementById('clock-size-value');
+    const cardSizeSlider = document.getElementById('card-size-slider');
+    const cardSizeValue = document.getElementById('card-size-value');
 
     // Data Management Elements
     const exportBtn = document.getElementById('export-btn');
@@ -68,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             render();
             applyBackground(settings, backgroundLayer);
+            applyScale(settings);
             initSearch(settings, (newSettings) => {
                 settings = newSettings;
                 saveSettings();
@@ -86,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function saveSettings() {
         saveSettingsToStorage(settings, () => {
             applyBackground(settings, backgroundLayer);
+            applyScale(settings);
         });
     }
 
@@ -179,6 +189,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     settingsBtn.addEventListener('click', () => {
         bgUrlInput.value = settings.backgroundImage || '';
+        
+        // Set slider values
+        clockSizeSlider.value = settings.clockScale || 1.0;
+        clockSizeValue.textContent = (settings.clockScale || 1.0) + 'x';
+        cardSizeSlider.value = settings.cardScale || 1.0;
+        cardSizeValue.textContent = (settings.cardScale || 1.0) + 'x';
+
         openModal(settingsModal);
     });
     
@@ -186,6 +203,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Save Shortcut
     saveShortcutBtn.addEventListener('click', handleSaveShortcut);
+
+    // Appearance Settings
+    clockSizeSlider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        clockSizeValue.textContent = val + 'x';
+        settings.clockScale = val;
+        applyScale(settings); // Apply immediately for preview
+        saveSettings(); // Debounce could be better but local storage is fast enough
+    });
+
+    cardSizeSlider.addEventListener('input', (e) => {
+        const val = e.target.value;
+        cardSizeValue.textContent = val + 'x';
+        settings.cardScale = val;
+        applyScale(settings);
+        saveSettings();
+    });
 
     // Background Settings
     bgUrlInput.addEventListener('change', () => {

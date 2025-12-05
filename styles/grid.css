@@ -1,9 +1,18 @@
+:root {
+    --base-card-size: 120px;
+    --base-gap: 20px;
+    --base-padding: 50px;
+    --base-icon-size: 48px;
+    --base-title-size: 0.9rem;
+    --card-scale: 1;
+}
+
 #quick-access-grid { 
     /* 使用 CSS Grid 实现网格布局 */
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* 响应式网格 */
-    gap: 20px; 
-    padding: 50px;
+    grid-template-columns: repeat(auto-fill, minmax(calc(var(--base-card-size) * var(--card-scale)), 1fr)); /* 响应式网格 */
+    gap: calc(var(--base-gap) * var(--card-scale)); 
+    padding: var(--base-padding);
     max-width: 1200px;
     margin: 0 auto;
     width: 100%;
@@ -17,7 +26,7 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     border-radius: 16px;
-    padding: 20px;
+    padding: calc(20px * var(--card-scale));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,8 +63,8 @@
 }
 
 .shortcut-icon {
-    width: 48px;
-    height: 48px;
+    width: calc(var(--base-icon-size) * var(--card-scale));
+    height: calc(var(--base-icon-size) * var(--card-scale));
     margin-bottom: 10px;
     object-fit: contain;
 }
@@ -68,8 +77,13 @@
     justify-content: center;
 }
 
+.icon-placeholder svg {
+    width: calc(var(--base-icon-size) * var(--card-scale));
+    height: calc(var(--base-icon-size) * var(--card-scale));
+}
+
 .shortcut-title {
-    font-size: 0.9rem;
+    font-size: calc(var(--base-title-size) * var(--card-scale));
     text-align: center;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -131,68 +145,47 @@
 
 /* Responsive Design */
 @media (max-width: 1560px) {
-    #quick-access-grid {
-        padding: 30px;
-        gap: 15px;
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    :root {
+        --base-card-size: 100px;
+        --base-gap: 15px;
+        --base-padding: 30px;
+        --base-icon-size: 40px;
+        --base-title-size: 0.85rem;
     }
     
     .shortcut-item {
-        padding: 15px;
         border-radius: 12px;
-    }
-
-    .shortcut-icon {
-        width: 40px;
-        height: 40px;
-    }
-    
-    .shortcut-title {
-        font-size: 0.85rem;
     }
 }
 
 @media (max-width: 768px) {
-    #quick-access-grid {
-        padding: 20px;
-        gap: 10px;
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    :root {
+        --base-card-size: 80px;
+        --base-gap: 10px;
+        --base-padding: 20px;
+        --base-icon-size: 32px;
+        --base-title-size: 0.8rem;
     }
 
     .shortcut-item {
-        padding: 10px;
         border-radius: 10px;
-    }
-
-    .shortcut-icon {
-        width: 32px;
-        height: 32px;
-    }
-
-    .shortcut-title {
-        font-size: 0.8rem;
     }
 }
 
 /* Large Screens (2K / 4K Monitors) */
 @media (min-width: 2000px) {
+    :root {
+        --base-card-size: 140px;
+        --base-gap: 30px;
+        --base-icon-size: 64px;
+        --base-title-size: 1.1rem;
+    }
+
     #quick-access-grid {
         max-width: 1600px;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 30px;
     }
 
     .shortcut-item {
-        padding: 30px;
         border-radius: 20px;
-    }
-
-    .shortcut-icon {
-        width: 64px;
-        height: 64px;
-    }
-
-    .shortcut-title {
-        font-size: 1.1rem;
     }
 }

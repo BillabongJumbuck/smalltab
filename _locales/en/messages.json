@@ -30,5 +30,8 @@
   "exportBtn": { "message": "Export Data" },
   "importBtn": { "message": "Import Data" },
   "importSuccess": { "message": "Data imported successfully!" },
-  "importError": { "message": "Invalid data file." }
+  "importError": { "message": "Invalid data file." },
+  "appearanceTitle": { "message": "Appearance" },
+  "clockSizeLabel": { "message": "Clock Size" },
+  "cardSizeLabel": { "message": "Card Size" }
 }

@@ -30,5 +30,8 @@
   "exportBtn": { "message": "导出数据" },
   "importBtn": { "message": "导入数据" },
   "importSuccess": { "message": "数据导入成功！" },
-  "importError": { "message": "无效的数据文件。" }
+  "importError": { "message": "无效的数据文件。" },
+  "appearanceTitle": { "message": "外观设置" },
+  "clockSizeLabel": { "message": "时钟大小" },
+  "cardSizeLabel": { "message": "卡片大小" }
 }

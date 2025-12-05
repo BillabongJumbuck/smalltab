@@ -151,6 +151,16 @@ export function applyBackground(settings, backgroundElement) {
     }
 }
 
+export function applyScale(settings) {
+    const root = document.documentElement;
+    if (settings.cardScale) {
+        root.style.setProperty('--card-scale', settings.cardScale);
+    }
+    if (settings.clockScale) {
+        root.style.setProperty('--clock-scale', settings.clockScale);
+    }
+}
+
 export function openModal(modal) {
     modal.classList.remove('hidden');
 }
